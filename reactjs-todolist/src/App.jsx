@@ -4,48 +4,74 @@ import TodoList from "./components/TodoList"
 
 function App() {
   const [todos, setTodos] = useState([])
-  const [todoValue, setTodoValue] = useState('')
 
-    function persistData(newList){
-      localStorage.setItem('todos', JSON.stringify({todos:newList}))
-    }
-    function handleAddTodos(newTodo){
-      const newToDoList = [...todos, newTodo]
-      persistData(newToDoList)
-      setTodos(newToDoList)
-    }
+  // Persist todos to localStorage
+  function persistData(newTodoList){
+    localStorage.setItem('todos', JSON.stringify(newTodoList))
+  }
 
-    function handleRemoveTodos(index){
-      //creating new list using filter and removing the todo that matches the given index
-      const newTodoList = todos.filter((todo, todoIndex) => {
-        return todoIndex !== index
-      })
-      persistData(newTodoList)
-      setTodos(newTodoList) //call setTodos function with the new list 
-    }
+  // Add a new todo item
+  function handleAddTodos(newTodo){
+    const newTodoList = [...todos, { id: Date.now(), text: newTodo, isEditing: false }]
+    setTodos(newTodoList)
+    persistData(newTodoList)
+  }
 
-    function handleEditTodos(index){
-      const valueToBeEdited = todos[index]
-      setTodoValue(valueToBeEdited)
-      handleRemoveTodos(index)
-    }
+  // Remove a todo by its id
+  function handleRemoveTodos(id){
+    const newTodoList = todos.filter(todo => todo.id !== id)
+    setTodos(newTodoList)
+    persistData(newTodoList)
+  }
 
-    useEffect(() => {if (!localStorage){
-      return
-    }
-      let localTodos = localStorage.getItem('todos')
-      if (!localTodos){
-        return
-      }
-      localTodos = JSON.parse(localTodos).todos
+  // Move a todo into edit mode
+  function handleEditTodos(id){
+    const newTodoList = todos.map(todo => 
+      todo.id === id ? { ...todo, isEditing: true } : todo
+    )
+    setTodos(newTodoList)
+    persistData(newTodoList)
+  }
+
+  // Update the text while editing
+  function handleUpdateTodos(id, newText){
+    const newTodoList = todos.map(todo => 
+      todo.id === id ? { ...todo, text: newText } : todo
+    )
+    setTodos(newTodoList)
+    persistData(newTodoList)
+  }
+
+  // Turn editing mode off and save changes
+  function handleFinishEdit(id){
+    const newTodoList = todos.map(todo => 
+      todo.id === id ? { ...todo, isEditing: false } : todo
+    )
+    setTodos(newTodoList)
+    persistData(newTodoList)
+  }
+
+  // Load todos from localStorage on mount
+  useEffect(() => {
+    const localTodos = JSON.parse(localStorage.getItem("todos"))
+    if (Array.isArray(localTodos)) {
       setTodos(localTodos)
-    
-    }, []) //[] dependency array so this function will run on every page refresh
+    }
+    else{
+      setTodos([]) //default if the local storage is corrupted or not an array
+    }
+  }, [])
 
   return (
     <>
-      <TodoInput todoValue={todoValue} setTodoValue={setTodoValue} handleAddTodos={handleAddTodos} />
-      <TodoList handleEditTodos={handleEditTodos} handleRemoveTodos={handleRemoveTodos} todos={todos} /> 
+      <TodoInput handleAddTodos={handleAddTodos} />
+      <TodoList 
+        todos={todos}
+        handleEditTodos={handleEditTodos}  
+        handleUpdateTodos={handleUpdateTodos}
+        handleFinishEdit={handleFinishEdit}
+        handleRemoveTodos={handleRemoveTodos} 
+      /> 
     </>
   )
 }

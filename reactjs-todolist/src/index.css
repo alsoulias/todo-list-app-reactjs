@@ -1,5 +1,5 @@
 * {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Courier Prime', sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -8,10 +8,25 @@
 
 h1,
 h2,
-h3,
-input,
-button {
-  font-family: 'Press Start 2P', system-ui;
+h3
+{
+  font-family: 'Courier Prime', system-ui;
+}
+
+.todoInput{
+  font-family : 'Courier Prime', cursive
+}
+
+/* for the placeholder text */
+.todoInput::placeholder{
+  font-family: 'Courier Prime', sans-serif;
+  color: #888; /* optional: gray placeholder */
+}
+
+.todoItem p {
+  font-family: 'Courier Prime', cursive;
+  font-size: 0.9em;
+  flex: 1;
 }
 
 #root {
