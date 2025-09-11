@@ -1,8 +1,15 @@
 import React from 'react'
 
-export default function TodoCard({ todo, handleEditTodos, handleUpdateTodos, handleFinishEdit, handleRemoveTodos }) {
+export default function TodoCard({ todo, handleEditTodos, handleUpdateTodos, handleFinishEdit, handleRemoveTodos, handleToggleComplete}) {
     return (
-        <li className='todoItem'>
+        <li className={`todoItem ${todo.color} ${todo.completed ? "completed" : ""}`}>
+            <button
+                className={`checkButton ${todo.completed ? 'checked' : ''}`}
+                onClick={() => handleToggleComplete(todo.id)}
+            >
+                <i className={`fa-solid ${todo.completed ? 'fa-circle-check' : 'fa-circle'}`}></i>
+            </button>
+
             {todo.isEditing ? (
                 <input 
                     type = "text"
@@ -13,7 +20,9 @@ export default function TodoCard({ todo, handleEditTodos, handleUpdateTodos, han
                     onKeyDown={(e) => e.key === "Enter" && handleFinishEdit(todo.id)}
                 />
             ) : (
-                <p>{todo.text}</p>
+                <p style={{ textDecoration: todo.completed ? "line-through" : "none"}}>
+                {todo.text}
+                </p>
 
             )}
             <div className='actionsContainer'>
