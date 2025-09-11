@@ -13,6 +13,23 @@ h3
   font-family: 'Courier Prime', system-ui;
 }
 
+
+/* header of the page */
+header h1{
+  font-family: 'Courier Prime', monospace;
+  font-size: 2rem;
+  text-align: center;
+  color: #fff;
+  margin-bottom: 10px
+}
+
+header p{
+  font-size: 0.9rem;
+  text-align: center;
+  color: #e0e0e0;
+  margin-bottom: 20px
+}
+
 .todoInput{
   font-family : 'Courier Prime', cursive
 }
@@ -47,6 +64,8 @@ h3
   border-radius: 14px;
   background: white;
   transition: all 0.3s ease; /* smooth fade */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 
@@ -63,6 +82,10 @@ h3
   opacity: 0.8;
 }
 
+.todoItem:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
 
 /* Animation for the checkmark so it bounces a little bit when clicked */
 @keyframes bounce {
@@ -99,6 +122,8 @@ h3
   background: #4d688c;
   gap: 14px;
 }
+
+
 
 header {
   display: flex;

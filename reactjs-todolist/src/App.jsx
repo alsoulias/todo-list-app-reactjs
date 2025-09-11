@@ -86,6 +86,10 @@ function App() {
 
   return (
     <>
+      <header>
+        <h1>My Todo List</h1>
+        <p>Stay organized and productive!</p>
+      </header>
       <TodoInput handleAddTodos={handleAddTodos} />
       <TodoList 
         todos={todos}
@@ -95,6 +99,7 @@ function App() {
         handleRemoveTodos={handleRemoveTodos} 
         handleToggleComplete={handleToggleComplete}
       /> 
+      
     </>
   )
 }

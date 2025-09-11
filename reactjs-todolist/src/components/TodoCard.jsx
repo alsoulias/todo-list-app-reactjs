@@ -7,7 +7,7 @@ export default function TodoCard({ todo, handleEditTodos, handleUpdateTodos, han
                 className={`checkButton ${todo.completed ? 'checked' : ''}`}
                 onClick={() => handleToggleComplete(todo.id)}
             >
-                <i className={`fa-solid ${todo.completed ? 'fa-circle-check' : 'fa-circle'}`}></i>
+                <i className={`fa-regular ${todo.completed ? 'fa-square-check' : 'fa-square'}`}></i>
             </button>
 
             {todo.isEditing ? (
